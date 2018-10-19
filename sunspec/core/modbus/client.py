@@ -275,6 +275,8 @@ class ModbusClientRTU(object):
         if except_code:
             raise ModbusClientException('Modbus exception %d' % (except_code))
 
+        if sys.version_info > (3,):
+            return bytes(resp[3:-2], 'latin-1')
         return resp[3:-2]
 
     def read(self, slave_id, addr, count, op=FUNC_READ_HOLDING, trace_func=None, max_count=REQ_COUNT_MAX):
@@ -306,7 +308,7 @@ class ModbusClientRTU(object):
             Byte string containing register contents.
         """
 
-        resp = ''
+        resp = b''
         read_count = 0
         read_offset = 0
 
