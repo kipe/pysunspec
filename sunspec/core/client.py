@@ -326,6 +326,8 @@ class ClientModel(device.Model):
         """Read all points in the model from the physical device.
         """
 
+        # Hacky fix for SolarEdge
+        time.sleep(0.1)
         if self.model_type is not None:
             # read current model
             try:
